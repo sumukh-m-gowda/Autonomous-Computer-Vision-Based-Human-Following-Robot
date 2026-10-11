@@ -1,0 +1,58 @@
+seed=0
+train images (8): ['left25343', 'left22331', 'left25057', 'left24875', 'left23945', 'left23075', 'left22741', 'left22088']
+TEST images  (3): ['left23761', 'left24496', 'left0586']
+training time: 127s
+majority-class baseline accuracy on test: 0.510 (always predicting 'untraversable')
+
+--- TEST (unseen images), decision=original ---
+pixels: 51324
+pixel accuracy (6 classes): 0.597
+mean IoU over classes present: 0.343
+  sky                IoU=0.880  recall=0.952  true pixels=14568
+  traversable grass  IoU=0.316  recall=0.673  true pixels=5366
+  putting green      IoU=0.036  recall=0.142  true pixels=1203
+  untraversable      IoU=0.373  recall=0.406  true pixels=26200
+  pavement           IoU=0.144  recall=0.499  true pixels=2135
+  golfer             IoU=0.307  recall=0.699  true pixels=1852
+traversable-vs-rest accuracy: 0.740
+traversable IoU: 0.276  precision: 0.317  recall: 0.678
+confusion matrix (% of each TRUE class; columns = predicted, order: sky, traversable grass, putting green, untraversable, pavement, golfer)
+    95    0    0    3    0    2
+     0   67    7   15    5    5
+     0   75   14   10    0    0
+     4   19   11   41   19    7
+     0    7   12   24   50    7
+     2    3    3   21    1   70
+
+--- TEST (unseen images), decision=argmax ---
+pixels: 51324
+pixel accuracy (6 classes): 0.702
+mean IoU over classes present: 0.398
+  sky                IoU=0.847  recall=0.958  true pixels=14568
+  traversable grass  IoU=0.311  recall=0.674  true pixels=5366
+  putting green      IoU=0.036  recall=0.080  true pixels=1203
+  untraversable      IoU=0.556  recall=0.641  true pixels=26200
+  pavement           IoU=0.164  recall=0.277  true pixels=2135
+  golfer             IoU=0.472  recall=0.530  true pixels=1852
+traversable-vs-rest accuracy: 0.798
+traversable IoU: 0.304  precision: 0.379  recall: 0.604
+confusion matrix (% of each TRUE class; columns = predicted, order: sky, traversable grass, putting green, untraversable, pavement, golfer)
+    96    0    0    4    0    0
+     1   67    2   26    3    0
+     0   74    8   18    0    0
+     6   20    4   64    5    1
+     5    8    9   51   28    0
+     5    3    1   37    0   53
+
+--- TRAIN (seen images), decision=original ---
+pixels: 136864
+pixel accuracy (6 classes): 0.656
+mean IoU over classes present: 0.448
+  sky                IoU=0.748  recall=0.963  true pixels=30208
+  traversable grass  IoU=0.468  recall=0.721  true pixels=15547
+  putting green      IoU=0.296  recall=0.548  true pixels=8501
+  untraversable      IoU=0.451  recall=0.492  true pixels=63344
+  pavement           IoU=0.279  recall=0.656  true pixels=6530
+  golfer             IoU=0.446  recall=0.733  true pixels=12734
+traversable-vs-rest accuracy: 0.857
+traversable IoU: 0.475  precision: 0.539  recall: 0.800
