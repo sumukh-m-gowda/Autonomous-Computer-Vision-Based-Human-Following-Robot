@@ -25,10 +25,10 @@ import time
 
 import cv2
 
-PERSON_CLASS = 1        # COCO label id for "person"
-DEAD_ZONE = 0.12        # |offset| below this -> go straight
-TARGET_HEIGHT = 0.60    # desired box height / frame height (follow distance)
-HEIGHT_TOLERANCE = 0.08 # within +/- this of the target -> hold position
+PERSON_CLASS = 1      
+DEAD_ZONE = 0.12        
+TARGET_HEIGHT = 0.60   
+HEIGHT_TOLERANCE = 0.08 
 
 
 def follow_command(box, frame_w, frame_h):
@@ -44,18 +44,15 @@ def follow_command(box, frame_w, frame_h):
     """
     x1, y1, x2, y2 = box
     cx = (x1 + x2) / 2.0
-    # Horizontal offset of the box centre, normalised to [-1, 1]
     offset = (cx - frame_w / 2.0) / (frame_w / 2.0)
     steer = 0.0 if abs(offset) < DEAD_ZONE else max(-1.0, min(1.0, offset))
 
-    # Box height as a fraction of the frame: bigger = person is closer
     height_ratio = (y2 - y1) / float(frame_h)
     if height_ratio > TARGET_HEIGHT + HEIGHT_TOLERANCE:
         speed, move = 0.0, "TOO CLOSE - STOP"
     elif height_ratio >= TARGET_HEIGHT - HEIGHT_TOLERANCE:
         speed, move = 0.0, "HOLD"
     else:
-        # The further away (smaller box), the faster, capped at 1.0
         speed = min(1.0, (TARGET_HEIGHT - height_ratio) / TARGET_HEIGHT)
         move = "FORWARD"
 
@@ -97,7 +94,7 @@ def detect_people(model, torch, frame_bgr, device, conf):
 
 def draw_overlay(frame, people, target, steer, speed, label, fps):
     h, w = frame.shape[:2]
-    cv2.line(frame, (w // 2, 0), (w // 2, h), (200, 200, 200), 1)  # image centre
+    cv2.line(frame, (w // 2, 0), (w // 2, h), (200, 200, 200), 1) 
     for p in people:
         x1, y1, x2, y2, s = [int(v) if i < 4 else v for i, v in enumerate(p)]
         is_target = target is not None and p is target
@@ -121,7 +118,7 @@ def open_source(args):
         cap = cv2.VideoCapture(args.video)
     else:
         cap = cv2.VideoCapture(args.camera)
-        if not cap.isOpened():  # on Windows the DirectShow backend sometimes works
+        if not cap.isOpened():  
             cap = cv2.VideoCapture(args.camera, cv2.CAP_DSHOW)
     return cap
 
@@ -155,7 +152,6 @@ def main():
 
         target, steer, speed, label = None, 0.0, 0.0, ""
         if people:
-            # Target = largest box (closest person); no tracking between frames
             target = max(people, key=lambda p: (p[2] - p[0]) * (p[3] - p[1]))
             steer, speed, label = follow_command(target[:4], w, h)
 
