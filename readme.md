@@ -52,9 +52,6 @@ If activation is blocked, run `Set-ExecutionPolicy -Scope Process Bypass` first.
 
 ## Data
 
-The dataset is **not** stored in this repository. Download the project folder linked in the original report:
-https://drive.google.com/drive/folders/1t3cRiDiwy8AAfzsRdrktjciCVB-Yk-Tb
-
 Place the files in a folder called `Data/` in the project root. We use 11 photos with hand-painted masks (`leftXXXXX.jpg` and `leftXXXXX_sup.jpg`) and 2 unlabelled test photos. Check with:
 
 ```powershell
